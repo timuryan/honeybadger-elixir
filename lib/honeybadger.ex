@@ -1,5 +1,6 @@
 defmodule Honeybadger do
   use Application
+
   alias Honeybadger.Backtrace
   alias Honeybadger.Client
   alias Honeybadger.Notice
@@ -102,6 +103,8 @@ defmodule Honeybadger do
     function yourself.
   """
   def start(_type, _opts) do
+    import Supervisor.Spec, warn: false
+
     require_environment_name!()
 
     app_config = Application.get_all_env(:honeybadger)
@@ -112,7 +115,8 @@ defmodule Honeybadger do
       :error_logger.add_report_handler(Honeybadger.Logger)
     end
 
-    Honeybadger.Metrics.Supervisor.start_link
+    opts = [strategy: :one_for_one, name: Honeybadger.Supervisor]
+    Supervisor.start_link([], opts)
   end
 
   defmacro notify(exception) do
