@@ -55,7 +55,7 @@ defmodule Honeybadger.Mixfile do
       {:hackney, "~> 1.1"},
       {:jason, "~> 1.0"},
       {:plug, ">= 1.0.0 and < 2.0.0", optional: true},
-      {:phoenix, ">= 1.0.0 and < 2.0.0", optional: true},
+      {:phoenix, github: "phoenixframework/phoenix"},
 
       # Dev dependencies
       {:ex_doc, "~> 0.7", only: :dev},
